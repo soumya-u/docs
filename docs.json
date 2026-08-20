@@ -16,6 +16,7 @@
         "groups": [
           {
             "group": "Getting started",
+            "public": true,
             "pages": [
               "index",
               "quickstart"
