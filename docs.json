@@ -9,12 +9,56 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
-    "pages": [
+    "tabs": [
       {
-        "group": "Getting Started",
-        "pages": [
-          "index",
-          "quickstart"
+        "tab": "Guides",
+        "icon": "book-open",
+        "groups": [
+          {
+            "group": "Getting started",
+            "public": true,
+            "pages": [
+              "index",
+              "quickstart"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Platform",
+        "icon": "cube",
+        "groups": [
+          {
+            "group": "Core concepts",
+            "pages": [
+              "platform/overview",
+              "platform/architecture"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Early access",
+        "icon": "flask",
+        "groups": [
+          {
+            "group": "Beta program",
+            "pages": [
+              "early-access/overview"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "Internal",
+        "icon": "lock",
+        "groups": [
+          {
+            "group": "Runbooks",
+            "pages": [
+              "internal/runbook"
+            ]
+          }
         ]
       }
     ],

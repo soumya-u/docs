@@ -1,0 +1,20 @@
+---
+title: "Architecture"
+description: "Services, boundaries, and data flow"
+---
+
+<Note>
+  **Access tier: authenticated.** Same as the overview — no frontmatter flags, so the
+  site default applies.
+</Note>
+
+A second page in the same group, included to show that the gating decision is made per
+group in `docs.json`, not per file.
+
+## Components
+
+| Service | Responsibility |
+| --- | --- |
+| Gateway | Request routing and rate limiting |
+| Core | Business logic and persistence |
+| Webhooks | Outbound event delivery |
