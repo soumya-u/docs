@@ -1,0 +1,33 @@
+---
+title: "Platform overview"
+description: "How the platform fits together"
+---
+
+<Note>
+  **Access tier: authenticated.** This page has no `public` or `groups` field in its
+  frontmatter, so it inherits the site default — any logged-in user can read it, and
+  logged-out visitors are redirected to sign in.
+</Note>
+
+The platform is the layer your integration talks to. This page is the entry point for
+customers who have signed up and logged in.
+
+## Why this page is gated
+
+Under authentication, every page requires a login **by default**. You do not add a lock
+to this page — you simply decline to add an exemption.
+
+```mdx Frontmatter for this page
+---
+title: "Platform overview"
+description: "How the platform fits together"
+---
+```
+
+That is the whole configuration. The absence of `public: true` is what gates it.
+
+## What logged-in users can do
+
+- Read the full core concepts section
+- Use the API playground with prefilled credentials
+- See account-specific values in code samples

@@ -1,0 +1,38 @@
+---
+title: "On-call runbook"
+description: "Internal incident response procedures"
+---
+
+<Warning>
+  **Access tier: `internal` group only.** Restricted to employees via
+  `groups: ["internal"]`. This is the tier where a misconfiguration actually costs you
+  something, so it is the one worth verifying before every release.
+</Warning>
+
+Preview this view locally with:
+
+```bash
+mint dev --groups internal
+```
+
+## Severity levels
+
+| Level | Definition | Page on-call |
+| --- | --- | --- |
+| SEV1 | Full outage | Immediately |
+| SEV2 | Degraded for some customers | Within 15 min |
+| SEV3 | Cosmetic or internal-only | Next business day |
+
+## First response
+
+<Steps>
+  <Step title="Acknowledge">
+    Claim the alert so the rotation knows it is being handled.
+  </Step>
+  <Step title="Assess blast radius">
+    Check the dashboard before changing anything.
+  </Step>
+  <Step title="Communicate">
+    Post to the incident channel, then update the status page.
+  </Step>
+</Steps>

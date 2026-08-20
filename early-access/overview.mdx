@@ -1,0 +1,31 @@
+---
+title: "Early access program"
+description: "Features available to beta customers"
+---
+
+<Note>
+  **Access tier: `beta` group only.** This page carries `groups: ["beta"]` in its
+  frontmatter. Authenticated users who are *not* in the `beta` group receive a 404 —
+  not a permission error, so the page's existence is never disclosed.
+</Note>
+
+Preview this view locally with:
+
+```bash
+mint dev --groups beta
+```
+
+## Frontmatter that gates this page
+
+```mdx
+---
+title: "Early access program"
+description: "Features available to beta customers"
+---
+```
+
+## Current beta features
+
+- Streaming responses
+- Bulk export API
+- Custom retention windows
