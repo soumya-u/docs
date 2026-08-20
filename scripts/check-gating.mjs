@@ -23,7 +23,7 @@ const GATED_DIRS = {
  * These are not group-gated, but they describe internal structure, so
  * publishing them would disclose what the 404 behaviour is designed to withhold.
  */
-const MUST_NOT_BE_PUBLIC = ['gating'];
+const MUST_NOT_BE_PUBLIC = ['platform/gating'];
 
 const root = process.cwd();
 const errors = [];
