@@ -147,6 +147,60 @@ Development Mode: Using mock user groups: [ 'internal' ]
 The 404 is deliberate. A `403 Forbidden` would confirm that a restricted page exists, which
 is itself a disclosure. A 404 is indistinguishable from a URL that was never real.
 
+## Best practices
+
+### Let the file structure mirror the access structure
+
+One audience per tab, one directory per tab. Then "who can see this page?" is answered by
+where the file lives, rather than by opening it and reading the frontmatter. Gating
+scattered across a flat sidebar is how pages leak, because no one can hold the whole
+picture in their head at once.
+
+### `groups` is page-level only, and nothing warns you
+
+`public` works at the group level in `docs.json`, so it is reasonable to assume `groups`
+does too. It does not - it must appear in every page's frontmatter.
+
+Writing it at group level is worse than it sounds. The schema does not define it, but
+`mint validate` accepts the file anyway and silently ignores the field:
+
+```json Does nothing
+{
+  "group": "Runbooks",
+  "groups": ["internal"],
+  "pages": ["internal/runbook", "internal/escalation"]
+}
+```
+
+Both pages sit in that group. Only the one carrying `groups` in its own frontmatter is
+protected; the other is readable by every logged-in user. Validation passes either way, so
+you can configure a section you believe is gated and have protected nothing.
+
+### Assert the invariant yourself
+
+Because the platform cannot enforce it, check it in CI. `scripts/check-gating.mjs` fails
+the build when a page under a gated directory is missing its group.
+
+```bash
+node scripts/check-gating.mjs
+```
+
+The check reads **both** `docs.json` and page frontmatter. Visibility is declared in two
+places, so a check that reads only one gives false confidence - an earlier version of this
+script read frontmatter alone and passed while this very page was sitting in the public
+Guides group.
+
+Configuration is two objects at the top of the script:
+
+```js
+const GATED_DIRS = { 'internal': 'internal', 'early-access': 'beta' };
+const LOGIN_ONLY_DIRS = ['platform'];
+```
+
+Both are directories rather than page lists, deliberately. A list of pages has to be
+updated by hand every time someone adds a file, and stays quiet when they forget - which
+is the exact failure the script exists to catch.
+
 ## Related
 
 - [Authentication setup](https://www.mintlify.com/docs/deploy/authentication-setup)
