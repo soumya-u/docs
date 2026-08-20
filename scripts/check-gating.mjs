@@ -19,11 +19,21 @@ const GATED_DIRS = {
 };
 
 /**
- * Pages that must never sit in a group marked `public: true`.
- * These are not group-gated, but they describe internal structure, so
- * publishing them would disclose what the 404 behaviour is designed to withhold.
+ * Directories that rely on the site-wide default - a login, but no group.
+ * Nothing in these pages records the intended tier, so the directory has to.
  */
-const MUST_NOT_BE_PUBLIC = ['platform/gating'];
+const LOGIN_ONLY_DIRS = ['platform'];
+
+/**
+ * Every directory that must stay out of a `public: true` group. A gated
+ * directory is never public by definition, so it is derived rather than
+ * duplicated - one list cannot drift out of step with the other.
+ *
+ * Directories rather than page lists throughout: a list of pages has to be
+ * updated by hand whenever someone adds a file, and stays silent when they
+ * forget, which is the exact failure this script exists to catch.
+ */
+const NEVER_PUBLIC_DIRS = new Set([...LOGIN_ONLY_DIRS, ...Object.keys(GATED_DIRS)]);
 
 const root = process.cwd();
 const errors = [];
@@ -111,9 +121,9 @@ for (const file of pages) {
     errors.push(`${rel}: has groups but sits in a public group in docs.json - ambiguous, pick one`);
   }
 
-  // 4. Pages that describe internal structure must stay behind a login.
-  if (MUST_NOT_BE_PUBLIC.includes(slugOf(rel)) && publics.has(slugOf(rel))) {
-    errors.push(`${rel}: listed in MUST_NOT_BE_PUBLIC but sits in a public group in docs.json`);
+  // 4. Pages in a non-public directory must stay out of public groups.
+  if (NEVER_PUBLIC_DIRS.has(dir) && publics.has(slugOf(rel))) {
+    errors.push(`${rel}: in ${dir}/, which must stay behind a login, but sits in a public group in docs.json - readable by anyone`);
   }
 
   // 5. Orphans are reachable by URL but invisible in navigation.
