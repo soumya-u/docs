@@ -31,9 +31,9 @@
           {
             "group": "Core concepts",
             "pages": [
-              "platform/gating",
               "platform/overview",
-              "platform/architecture"
+              "platform/architecture",
+              "platform/gating"
             ]
           }
         ]
